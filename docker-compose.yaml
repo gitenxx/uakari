@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  redis:
+    image: redis
+  rabbitmq:
+    image: rabbitmq
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    environment:
+      - "POSTGRES_DB=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_HOST=db"
+      - "REDIS_HOST=redis"
+      - "CELERY_BROKER_URL=amqp://guest:guest@rabbitmq"
+      # - "WEBDAV_URL=" # specify this to enable batch processing
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+  celery:
+    build: .
+    command: celery worker -A uakari --loglevel=info -Q file_processing
+    volumes:
+      - .:/app
+    environment:
+      - "POSTGRES_DB=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_HOST=db"
+      - "REDIS_HOST=redis"
+      - "CELERY_BROKER_URL=amqp://guest:guest@rabbitmq"
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
