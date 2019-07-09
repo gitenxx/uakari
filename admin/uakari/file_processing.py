@@ -1,12 +1,14 @@
 from django.conf import settings
+
 import base64
 import hashlib
 import datetime
 from functools import partial
 import pandas as pd
 import requests
-from uakari.save_to_redis import write_to_redis, write_one_url
-from uakari.uakari import logger
+
+from .redis import write_to_redis, write_one_url
+from .uakari import logger
 
 
 class Processor:
@@ -47,7 +49,6 @@ class FileProcessor(Processor):
 
 
 class URLProcessor(Processor):
-
     def process_url(self, long_url: str, max_hash_length: int, expiration_time: datetime):
         logger.info(f'Processing is started, long url: {long_url}')
 

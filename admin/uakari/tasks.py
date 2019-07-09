@@ -1,6 +1,6 @@
-from uakari.celery import celery_app
-from uakari.file_processing import FileProcessor
-from uakari.uakari import logger
+from .celery import celery_app
+from .file_processing import FileProcessor
+from .uakari import logger
 
 
 @celery_app.task(queue='file_processing')
@@ -20,7 +20,6 @@ def file_process(record_id: int):
         record.status = Record.F
         record.save()
         raise
-
 
     record.save()
 

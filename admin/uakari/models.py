@@ -1,10 +1,9 @@
 from django_webdav_storage.storage import WebDavStorage
 
 from django.db import models
-from django.conf import settings
-from uakari.tasks import file_process
-from uakari.file_processing import URLProcessor
-from uakari.uakari import logger
+from .tasks import file_process
+from .file_processing import URLProcessor
+from .uakari import logger
 
 
 class Record(models.Model):
@@ -41,7 +40,7 @@ class OneRecord(models.Model):
 
     long_url = models.CharField(max_length=225, blank=True)
     max_hash_length = models.IntegerField(default=24)
-    expire_at = models.DateTimeField(null=True, blank=True)
+    expiration_time = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         managed = False
@@ -53,6 +52,6 @@ class OneRecord(models.Model):
 
     def write_to_redis(self):
         processor = URLProcessor()
-        short_url = processor.process_url(self.long_url, self.max_hash_length, self.expire_at)
+        short_url = processor.process_url(self.long_url, self.max_hash_length, self.expiration_time)
         return short_url
 

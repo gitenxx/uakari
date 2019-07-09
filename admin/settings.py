@@ -75,7 +75,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'uakari'
+    'uakari',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
