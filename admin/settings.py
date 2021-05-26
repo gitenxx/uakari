@@ -2,11 +2,11 @@ import os
 import logging
 
 # Env's
-POSTGRES_DB = os.environ.get('POSTGRES_DB', 'uakari')
-POSTGRES_USER = os.environ.get('POSTGRES_USER', 'uakari_user')
-POSTGRES_PASS = os.environ.get('POSTGRES_PASS', None)
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'localhost')
-POSTGRES_PORT = int(os.environ.get('POSTGRES_PORT', '5432'))
+POSTGRES_DB = os.environ.get('POSTGRES_DB')
+POSTGRES_USER = os.environ.get('POSTGRES_USER')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'db')
+POSTGRES_PORT = int(os.environ.get('POSTGRES_PORT', '5433'))
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.environ.get('REDIS_PORT', '6379'))
 REDIS_PASS = os.environ.get('REDIS_PASS', None)
@@ -30,7 +30,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': POSTGRES_DB,
         'USER': POSTGRES_USER,
-        'PASSWORD': POSTGRES_PASS,
+        'PASSWORD': POSTGRES_PASSWORD,
         'HOST': POSTGRES_HOST,
         'PORT': POSTGRES_PORT
     }

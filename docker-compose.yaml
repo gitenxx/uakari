@@ -3,6 +3,15 @@ version: '3'
 services:
   db:
     image: postgres
+    environment:
+      - "POSTGRES_DB=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=samplepass"
+      - "POSTGRES_HOST=localhost"
+    restart: always
+    command: -p 5433
+    expose:
+    - "5433"
   redis:
     image: redis
   rabbitmq:
@@ -13,14 +22,15 @@ services:
     volumes:
       - .:/app
     environment:
-      - "POSTGRES_DB=postgres"
-      - "POSTGRES_USER=postgres"
-      - "POSTGRES_HOST=db"
       - "REDIS_HOST=redis"
       - "CELERY_BROKER_URL=amqp://guest:guest@rabbitmq"
+      - "POSTGRES_DB=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=samplepass"
+      - "POSTGRES_HOST=db"
       # - "WEBDAV_URL=" # specify this to enable batch processing
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - db
       - redis
@@ -33,7 +43,6 @@ services:
     environment:
       - "POSTGRES_DB=postgres"
       - "POSTGRES_USER=postgres"
-      - "POSTGRES_HOST=db"
       - "REDIS_HOST=redis"
       - "CELERY_BROKER_URL=amqp://guest:guest@rabbitmq"
     depends_on:

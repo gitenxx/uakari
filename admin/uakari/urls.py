@@ -10,7 +10,10 @@ urlpatterns = [
     path('', admin.site.urls),
     path('', include(router.urls)),
     path('add_url', views.process_url),
-    path('all_urls', views.get_urls)
+    path('all_urls', views.get_urls),
+    path('get_spurl', views.get_specific_url),
+    path('delete_url', views.delete_url),
+    path('delete_all', views.delete_all)
 ]
 
 admin.site.site_header = 'Uakari'

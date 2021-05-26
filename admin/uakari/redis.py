@@ -1,5 +1,7 @@
 from django.utils import timezone
 
+from functools import reduce
+
 from .connections import r
 from .uakari import logger
 
@@ -22,5 +24,15 @@ def get_keys():
         for key_from_lst in r.keys()
     }
 
+def get_specific_key(spkey):
+    return r.get(spkey).decode()
 
+def get_expiration_time(key):
+    return "%02d:%02d:%02d" % reduce(lambda ll,b : divmod(ll[0],b) + ll[1:], [(r.ttl(key),),60,60])
 
+def delete_one_url(key):
+    r.delete(key)
+    return key
+
+def delete_all_urls():
+    r.flushdb()
