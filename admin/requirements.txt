@@ -1,4 +1,4 @@
-Django==2.2.21
+Django==2.2.24
 django-admin-interface==0.6.3
 psycopg2-binary==2.8.3
 pandas==0.24.2
